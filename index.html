@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>專業髮型設計 - 線上預約</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-4">
+
+    <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6 mt-10">
+        <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">預約您的髮型師</h2>
+        
+        <!-- 表單開始 -->
+        <form id="hairBookingForm" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700">選擇服務</label>
+                <select id="service" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 bg-gray-50" required>
+                    <option value="剪髮">設計剪髮</option>
+                    <option value="染髮">質感單色染</option>
+                    <option value="燙髮">韓系溫塑燙</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">預約日期</label>
+                <input type="date" id="date" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 bg-gray-50" required>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">預約時段</label>
+                <input type="time" id="time" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 bg-gray-50" required>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">您的姓名</label>
+                <input type="text" id="name" placeholder="王小明" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 bg-gray-50" required>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">手機號碼</label>
+                <input type="tel" id="phone" placeholder="0912345678" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 bg-gray-50" required>
+            </div>
+
+            <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition">
+                確認預約
+            </button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('hairBookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // --- 請在此處修改你的 Google 表單資訊 ---
+            const formID = "你的表單ID"; // 例如: 1FAIpQLSfD...
+            const entryID = {
+                service: "entry.11111", // 請替換成你的項目 ID
+                date: "entry.22222",    // 請替換成你的日期 ID
+                time: "entry.33333",    // 請替換成你的時間 ID
+                name: "entry.44444",    // 請替換成你的姓名 ID
+                phone: "entry.55555"    // 請替換成你的電話 ID
+            };
+            // ------------------------------------
+
+            const service = document.getElementById('service').value;
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+
+            const googleFormUrl = `docs.google.com{formID}/formResponse?` + 
+                `${entryID.service}=${encodeURIComponent(service)}&` +
+                `${entryID.date}=${encodeURIComponent(date)}&` +
+                `${entryID.time}=${encodeURIComponent(time)}&` +
+                `${entryID.name}=${encodeURIComponent(name)}&` +
+                `${entryID.phone}=${encodeURIComponent(phone)}&submit=Submit`;
+
+            // 使用隱形 iframe 送出資料，避免跳轉頁面
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = googleFormUrl;
+            document.body.appendChild(iframe);
+
+            alert('感謝預約！我們會盡快與您聯絡。');
+            this.reset(); // 清空表單
+        });
+    </script>
+</body>
+</html>
